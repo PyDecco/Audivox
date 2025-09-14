@@ -137,3 +137,31 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Prisma
+prisma/migrations/
+.env
+
+# Docker
+.docker/
+
+# Uploads
+uploads/
+temp/
+
+# Piper TTS models
+models/
+*.onnx
+*.json
+
+# Audio files
+*.wav
+*.mp3
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
