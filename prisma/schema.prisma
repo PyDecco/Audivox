@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model File {
+  id           String   @id @default(uuid())
+  originalName String   @map("original_name")
+  mimeType     String   @map("mime_type")
+  size         BigInt
+  path         String
+  status       FileStatus @default(UPLOADED)
+  uploadedAt   DateTime @default(now()) @map("uploaded_at")
+  processedAt  DateTime? @map("processed_at")
+  metadata     Json?
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  readings Reading[]
+
+  @@map("files")
+}
+
+model Reading {
+  id           String        @id @default(uuid())
+  fileId       String        @map("file_id")
+  locale       Locale
+  startType    StartType     @map("start_type")
+  startValue   Int           @map("start_value")
+  speed        Decimal       @db.Decimal(3, 1)
+  format       AudioFormat
+  status       ReadingStatus @default(QUEUED)
+  progress     Decimal       @default(0.0) @db.Decimal(3, 2)
+  currentPage  Int           @default(0) @map("current_page")
+  totalPages  Int           @default(0) @map("total_pages")
+  audioPath    String?       @map("audio_path")
+  audioSize    BigInt?       @map("audio_size")
+  duration     Int?
+  errorMessage String?       @map("error_message")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  completedAt  DateTime?     @map("completed_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+
+  // Relations
+  file        File          @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  audioChunks AudioChunk[]
+
+  @@map("readings")
+}
+
+model AudioChunk {
+  id         String   @id @default(uuid())
+  readingId  String   @map("reading_id")
+  pageNumber Int      @map("page_number")
+  audioData  Bytes?   @map("audio_data")
+  duration   Int?
+  size       BigInt?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  // Relations
+  reading Reading @relation(fields: [readingId], references: [id], onDelete: Cascade)
+
+  @@map("audio_chunks")
+}
+
+// Enums
+enum FileStatus {
+  UPLOADED
+  PROCESSING
+  PROCESSED
+  ERROR
+
+  @@map("file_status")
+}
+
+enum ReadingStatus {
+  QUEUED
+  PROCESSING
+  DONE
+  ERROR
+
+  @@map("reading_status")
+}
+
+enum Locale {
+  PT_BR
+  ES_ES
+  EN_US
+
+  @@map("locale")
+}
+
+enum StartType {
+  PAGE
+  PERCENT
+  OFFSET
+
+  @@map("start_type")
+}
+
+enum AudioFormat {
+  WAV
+  MP3
+
+  @@map("audio_format")
+}
