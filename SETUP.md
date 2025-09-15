@@ -185,7 +185,7 @@ Após o setup do ambiente:
 
 1. **Instalar dependências**: `npm install`
 2. **Configurar banco**: `npm run db:push` e `npm run db:seed`
-3. **INFRA-002**: Configurar Supabase
+3. **Configurar Supabase**: `npm run setup:supabase` (veja [SUPABASE_SETUP.md](./SUPABASE_SETUP.md))
 4. **INFRA-003**: Setup do Piper TTS
 5. **BACK-001**: Criar projeto NestJS
 6. **FRONT-001**: Criar projeto Next.js
