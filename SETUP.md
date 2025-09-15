@@ -71,19 +71,19 @@ docker-compose ps
 ### Banco de Dados (Prisma)
 ```bash
 # Gerar cliente Prisma
-pnpm db:generate
+npm run db:generate
 
 # Criar/atualizar tabelas
-pnpm db:push
+npm run db:push
 
 # Criar migração
-pnpm db:migrate
+npm run db:migrate
 
 # Abrir Prisma Studio
-pnpm db:studio
+npm run db:studio
 
 # Popular banco com dados de exemplo
-pnpm db:seed
+npm run db:seed
 
 # Conectar ao PostgreSQL (se necessário)
 docker-compose exec postgres psql -U audivox -d audivox
@@ -183,8 +183,8 @@ audivox/
 
 Após o setup do ambiente:
 
-1. **Instalar dependências**: `pnpm install`
-2. **Configurar banco**: `pnpm db:push` e `pnpm db:seed`
+1. **Instalar dependências**: `npm install`
+2. **Configurar banco**: `npm run db:push` e `npm run db:seed`
 3. **INFRA-002**: Configurar Supabase
 4. **INFRA-003**: Setup do Piper TTS
 5. **BACK-001**: Criar projeto NestJS

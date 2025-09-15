@@ -46,12 +46,11 @@ audivox/
 │   └── shared/                # DTOs/Types compartilhados
 ├── tools/                     # Scripts DevOps
 ├── .env.example
-├── package.json               # pnpm / turbo / nx
-├── pnpm-workspace.yaml
+├── package.json               # npm / turbo
 └── turbo.json                 # ou nx.json (se Nx)
 ```
 
-**Gerenciador de workspace:** recomendado **pnpm + Turborepo** (ou Nx, se preferir).
+**Gerenciador de workspace:** **npm + Turborepo** (ou Nx, se preferir).
 
 ---
 
@@ -166,7 +165,7 @@ Status da sessão (e progresso se chunking estiver ativo).
 ```json
 {
   "id": "uuid",
-  "status": "processing",  // queued|processing|done|error
+  "status": "procegssing",  // queued|processing|done|error
   "progress": 0.42,
   "pages": { "start": 10, "end": 25 }
 }
