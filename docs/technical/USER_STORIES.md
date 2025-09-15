@@ -2,31 +2,6 @@
 
 ## 📋 To Do
 
-### INFRA-001: Setup do Ambiente de Desenvolvimento
-
-  - due: 2024-09-14
-  - tags: [infra, setup, docker]
-  - priority: high
-  - workload: Easy
-  - steps:
-      - [ ] Criar docker-compose.yml com PostgreSQL, Redis, Prometheus
-      - [ ] Criar scripts de setup automatizados
-      - [ ] Configurar variáveis de ambiente (.env.example)
-      - [ ] Implementar health checks básicos
-    ```md
-    **Como** desenvolvedor  
-    **Quero** ter um ambiente de desenvolvimento configurado  
-    **Para** poder desenvolver o MVP rapidamente  
-    
-    **Critérios de Aceitação:**
-    - Docker Compose com serviços básicos (PostgreSQL, Redis, Prometheus)
-    - Scripts de setup automatizados
-    - Variáveis de ambiente configuradas
-    - Health checks básicos funcionando
-    
-    **Estimativa**: 30 minutos
-    ```
-
 ### INFRA-002: Configuração do Supabase
 
   - due: 2024-09-14
@@ -437,6 +412,31 @@
     ```
 
 ## 🔄 In Progress
+
+### INFRA-001: Setup do Ambiente de Desenvolvimento
+
+  - due: 2024-09-14
+  - tags: [infra, setup, docker]
+  - priority: high
+  - workload: Easy
+  - steps:
+      - [ ] Criar docker-compose.yml com PostgreSQL, Redis, Prometheus
+      - [ ] Criar scripts de setup automatizados
+      - [ ] Configurar variáveis de ambiente (.env.example)
+      - [ ] Implementar health checks básicos
+    ```md
+    **Como** desenvolvedor  
+    **Quero** ter um ambiente de desenvolvimento configurado  
+    **Para** poder desenvolver o MVP rapidamente  
+    
+    **Critérios de Aceitação:**
+    - Docker Compose com serviços básicos (PostgreSQL, Redis, Prometheus)
+    - Scripts de setup automatizados
+    - Variáveis de ambiente configuradas
+    - Health checks básicos funcionando
+    
+    **Estimativa**: 30 minutos
+    ```
 
 ## ✅ Done
 
