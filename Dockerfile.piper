@@ -1,0 +1,51 @@
+# Dockerfile for Piper TTS
+FROM ubuntu:22.04
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    curl \
+    tar \
+    gzip \
+    libsndfile1 \
+    libsndfile1-dev \
+    libsox-fmt-all \
+    sox \
+    espeak-ng \
+    espeak-ng-data \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create piper directory
+WORKDIR /app/piper
+
+# Download and install Piper TTS
+RUN wget -O piper.tar.gz https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_x86_64.tar.gz \
+    && tar -xzf piper.tar.gz \
+    && chmod +x piper \
+    && mv piper /usr/local/bin/piper \
+    && rm piper.tar.gz
+
+# Create models directory
+RUN mkdir -p /app/models
+
+# Download Portuguese model
+RUN wget -O /app/models/pt_BR-hfc_pt-medium.onnx https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/pt/pt_BR/hfc_pt/medium/pt_BR-hfc_pt-medium.onnx \
+    && wget -O /app/models/pt_BR-hfc_pt-medium.onnx.json https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/pt/pt_BR/hfc_pt/medium/pt_BR-hfc_pt-medium.onnx.json
+
+# Download Spanish model
+RUN wget -O /app/models/es_ES-carlfm-medium.onnx https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/es/es_ES/carlfm/medium/es_ES-carlfm-medium.onnx \
+    && wget -O /app/models/es_ES-carlfm-medium.onnx.json https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/es/es_ES/carlfm/medium/es_ES-carlfm-medium.onnx.json
+
+# Download English model
+RUN wget -O /app/models/en_US-ryan-medium.onnx https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/ryan/medium/en_US-ryan-medium.onnx \
+    && wget -O /app/models/en_US-ryan-medium.onnx.json https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/ryan/medium/en_US-ryan-medium.onnx.json
+
+# Create test script
+RUN echo '#!/bin/bash\necho "Testing Piper TTS..."\necho "Olá mundo!" | piper --model /app/models/pt_BR-hfc_pt-medium.onnx --output_file /tmp/test.wav\necho "Piper TTS test completed!"' > /app/test-piper.sh \
+    && chmod +x /app/test-piper.sh
+
+# Set working directory
+WORKDIR /app
+
+# Default command
+CMD ["/app/test-piper.sh"]

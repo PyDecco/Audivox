@@ -1,0 +1,35 @@
+# Simple Dockerfile for Piper TTS
+FROM ubuntu:22.04
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    curl \
+    tar \
+    gzip \
+    libsndfile1 \
+    libsndfile1-dev \
+    libsox-fmt-all \
+    sox \
+    espeak-ng \
+    espeak-ng-data \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create piper directory
+WORKDIR /app/piper
+
+# Download and install Piper TTS
+RUN wget -O piper.tar.gz https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_linux_x86_64.tar.gz \
+    && tar -xzf piper.tar.gz \
+    && chmod +x piper/piper \
+    && cp piper/piper /usr/local/bin/piper \
+    && rm -rf piper.tar.gz piper
+
+# Create models directory
+RUN mkdir -p /app/models
+
+# Set working directory
+WORKDIR /app
+
+# Default command
+CMD ["piper", "--help"]
